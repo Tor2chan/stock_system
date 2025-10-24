@@ -5,17 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import th.team.stock.dto.ApiProviderData;
-import th.team.stock.models.AutApiProvider;
+import th.team.stock.dto.UsersData;
+import th.team.stock.models.Users;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repository for AutApiProvider
- * 
- * @author your-name
- */
-public interface AutApiProviderRepo extends JpaRepository<AutApiProvider, Long> {
+public interface UsersRepo extends JpaRepository<Users, Long>  {
     
 }

@@ -5,23 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * 
- * 
- * @author sutthipongk
- */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AutApiProvider {
+public class Users {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long providerId;
+    private Long id;
     
-    private String apiName;
-    private String endpoint;
-    private Boolean activeFlag;
-    private String remark;
+    private String name;
+    private String password;
+    private String role;
 }
