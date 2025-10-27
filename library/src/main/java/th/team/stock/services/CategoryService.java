@@ -37,7 +37,7 @@ public class CategoryService implements ApiConstant{
  
     
 
-    public Map<String, Object> findSysFtpExportDvByCondition(CategoryData criteria) {
+    public Map<String, Object> findCategory(CategoryData criteria) {
 		
 		Map<String, Object> result = new HashMap<>();
         StringBuilder conditions = new StringBuilder();

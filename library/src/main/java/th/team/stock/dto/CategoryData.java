@@ -16,6 +16,6 @@ public class CategoryData extends PageableCommon{
 
     private String code;
     private String name;
-    private String active;
+    private Boolean active;
     
 }

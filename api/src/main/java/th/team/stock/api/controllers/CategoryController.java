@@ -16,29 +16,31 @@ import th.team.stock.commons.CommonUtils;
 import th.team.stock.dto.CategoryData;
 import th.team.stock.models.Category;
 import th.team.stock.services.CategoryService;
-
+import th.team.stock.repositories.CategoryRepo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import th.team.stock.dto.CategoryData;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/stock/category")
+@RequestMapping("/stock-api/category")
 
 public class CategoryController implements ApiConstant{
     
     private final CategoryService categoryService;
+    private final CategoryRepo categoryRepo;
     
-    @PostMapping("find")
-    public ResponseEntity<Map<String, Object>> findSysFtpExportDv(HttpServletRequest request, HttpServletResponse response,
+    @PostMapping("find-category")
+    public ResponseEntity<Map<String, Object>> findCategory(HttpServletRequest request, HttpServletResponse response,
             @RequestBody CategoryData data) {
         try {
 
-            Map<String, Object> result = categoryService.findSysFtpExportDvByCondition(data);
+            Map<String, Object> result = categoryService.findCategory(data);
 
             Map<String, Object> addOn = new HashMap<>();
             addOn.put(TOTAL_RECORDS, result.get(TOTAL_RECORDS));
@@ -50,5 +52,31 @@ public class CategoryController implements ApiConstant{
         }
     }
 
- 
+    @PostMapping("create-category")
+    public ResponseEntity<Map<String, Object>> createCategory(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody CategoryData data) {
+        try {
+            // DTO >> Entity
+            Category category = new Category();
+            category.setCode(data.getCode());
+            category.setName(data.getName());
+            category.setActive(data.getActive());
+
+            categoryRepo.save(category);
+
+            // Entity -> DTO
+            CategoryData result = new CategoryData();
+            result.setId(category.getId());
+            result.setCode(category.getCode());
+            result.setName(category.getName());
+            result.setActive(category.getActive());
+
+            return new ResponseEntity<>(CommonUtils.response(result, "SUCCESS", null), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(CommonUtils.responseError("Invalid input data for creating category"), HttpStatus.OK);
+        }
+    }
+
 }
