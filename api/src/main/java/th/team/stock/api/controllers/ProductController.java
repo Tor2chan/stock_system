@@ -32,12 +32,12 @@ import th.team.stock.dto.ProductData;
 public class ProductController implements ApiConstant{
     private final ProductService productService;
     
-    @PostMapping("find")
-    public ResponseEntity<Map<String, Object>> findSysFtpExportDv(HttpServletRequest request, HttpServletResponse response,
+    @PostMapping("find-product-detail")
+    public ResponseEntity<Map<String, Object>> findProductDetail(HttpServletRequest request, HttpServletResponse response,
             @RequestBody ProductData data) {
         try {
 
-            Map<String, Object> result = productService.findSysFtpExportDvByCondition(data);
+            Map<String, Object> result = productService.findProductDetail(data);
 
             Map<String, Object> addOn = new HashMap<>();
             addOn.put(TOTAL_RECORDS, result.get(TOTAL_RECORDS));
@@ -49,6 +49,23 @@ public class ProductController implements ApiConstant{
         }
     }
 
+    @PostMapping("find-product")
+    public ResponseEntity<Map<String, Object>> findProduct(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody ProductData data) {
+        try {
+
+            Map<String, Object> result = productService.findProduct(data);
+
+            Map<String, Object> addOn = new HashMap<>();
+            addOn.put(TOTAL_RECORDS, result.get(TOTAL_RECORDS));
+
+            return new ResponseEntity<>(CommonUtils.response(result.get(ENTRIES), SUCCESS, addOn), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
+        }
+    }
+ 
  
 }
     

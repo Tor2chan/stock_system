@@ -21,7 +21,7 @@ public class Product {
     private String sku;
 
     private String batchCode;
-    private String amount;
+    private Integer amount;
     private String category;
     private Integer price;
     private Date receivedDate;
