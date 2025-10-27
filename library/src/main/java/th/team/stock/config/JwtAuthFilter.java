@@ -4,16 +4,13 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
-
 import th.team.stock.commons.JwtUtils;
 import th.team.stock.services.CustomUserDetailsService;
 
@@ -53,7 +50,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            // Log error but continue filter chain
             System.err.println("JWT Authentication Error: " + e.getMessage());
         }
 
