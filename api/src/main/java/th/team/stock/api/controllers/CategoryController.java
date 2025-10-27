@@ -27,7 +27,6 @@ import th.team.stock.dto.CategoryData;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/stock/category")
 
 public class CategoryController implements ApiConstant{

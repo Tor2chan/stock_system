@@ -27,7 +27,6 @@ import th.team.stock.dto.ProductData;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/stock-api/product")
 
 public class ProductController implements ApiConstant{
