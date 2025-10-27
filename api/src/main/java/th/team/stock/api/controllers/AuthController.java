@@ -12,7 +12,7 @@ import th.team.stock.commons.JwtUtils;
 import java.util.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/stock-api/auth")  
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -40,7 +40,7 @@ public class AuthController {
 
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Invalid credentials");
+                    .body(Map.of("error", "Invalid credentials"));
         }
     }
 }

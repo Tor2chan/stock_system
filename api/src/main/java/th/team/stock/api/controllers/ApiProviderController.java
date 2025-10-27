@@ -27,7 +27,7 @@ import th.team.stock.dto.UsersData;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/providers")
+@RequestMapping("/stock-api/providers")
 public class ApiProviderController implements ApiConstant{
     
     private final ApiProviderService apiProviderService;
