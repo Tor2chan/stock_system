@@ -18,9 +18,9 @@ public class AutApiProvider {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long providerId;
+    private Long providerId; 
     
-    private String apiName;
+    private String apiName; 
     private String endpoint;
     private Boolean activeFlag;
     private String remark;
