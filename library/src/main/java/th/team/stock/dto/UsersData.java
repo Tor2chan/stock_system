@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 public class UsersData extends PageableCommon{
     
     private Long id;
+
+    private String username;
     private String name;
     private String password;
     private String role;
