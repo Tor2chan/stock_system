@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-
-import th.team.stock.dto.CategoryData;
+import th.team.stock.services.EntityMapperService;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +33,7 @@ public class CategoryController implements ApiConstant{
     
     private final CategoryService categoryService;
     private final CategoryRepo categoryRepo;
+    private final EntityMapperService mapperService;
     
     @PostMapping("find-category")
     public ResponseEntity<Map<String, Object>> findCategory(HttpServletRequest request, HttpServletResponse response,
@@ -56,20 +56,14 @@ public class CategoryController implements ApiConstant{
     public ResponseEntity<Map<String, Object>> createCategory(HttpServletRequest request, HttpServletResponse response,
             @RequestBody CategoryData data) {
         try {
-            // DTO >> Entity
-            Category category = new Category();
+
+            Category category = mapperService.convertToEntity(data, Category.class);
             category.setCode(data.getCode());
             category.setName(data.getName());
             category.setActive(data.getActive());
 
             categoryRepo.save(category);
-
-            // Entity -> DTO
-            CategoryData result = new CategoryData();
-            result.setId(category.getId());
-            result.setCode(category.getCode());
-            result.setName(category.getName());
-            result.setActive(category.getActive());
+            CategoryData result = mapperService.convertToEntity(category, CategoryData.class);
 
             return new ResponseEntity<>(CommonUtils.response(result, "SUCCESS", null), HttpStatus.OK);
 
