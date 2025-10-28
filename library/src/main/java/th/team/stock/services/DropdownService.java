@@ -28,16 +28,13 @@ import th.team.stock.repositories.CategoryRepo;
 @RequiredArgsConstructor
 @Slf4j
 
-public class CategoryService implements ApiConstant{
+public class DropdownService implements ApiConstant{
 
     private final JdbcTemplate jdbcTemplate;
-    private final CategoryRepo CategoryRepo;
-
+    private final CategoryRepo categoryRepo;
     
  
-    
-
-    public Map<String, Object> findCategory(CategoryData criteria) {
+    public Map<String, Object> dropdownCategory(CategoryData criteria) {
 		
 		Map<String, Object> result = new HashMap<>();
         StringBuilder conditions = new StringBuilder();
@@ -45,18 +42,12 @@ public class CategoryService implements ApiConstant{
 
         String orderBy = " order by c.id asc ";
 
-
-        if (null != criteria.getId() && null != criteria.getId()) { 
-          conditions.append(" and id = ? ");
-          params.add(criteria.getId());
-            }
-
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");
         sb.append(orderBy);
         sb.append(" ) AS row_num, c.* ");
         sb.append(" from category c  ");
-        sb.append(WHERE);
+        sb.append(" where c.active = true ");
         sb.append(conditions.toString());
         sb.append(orderBy);
         sb.append(LIMIT);
@@ -76,6 +67,7 @@ public class CategoryService implements ApiConstant{
 
         return result;
     }
+		
 
 
 }

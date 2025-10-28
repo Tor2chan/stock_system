@@ -91,6 +91,12 @@ public class ProductService implements ApiConstant{
                 params.add(criteria.getSku());
             }
 
+
+          if (null != criteria.getId() && null != criteria.getId()) { 
+               conditions.append(" and id = ? ");
+                params.add(criteria.getId());
+            }
+
         
 
         StringBuilder sb = new StringBuilder();
