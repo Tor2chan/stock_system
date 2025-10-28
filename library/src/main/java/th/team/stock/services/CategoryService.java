@@ -46,10 +46,9 @@ public class CategoryService implements ApiConstant{
         String orderBy = " order by c.id desc ";
 
 
-          if (null != criteria.getId() && null != criteria.getId()) { 
-            conditions.append(" and id = ? ");
-            params.add(criteria.getId());
-              log.info("5555!!");
+        if (null != criteria.getId() && null != criteria.getId()) { 
+          conditions.append(" and id = ? ");
+          params.add(criteria.getId());
             }
 
         StringBuilder sb = new StringBuilder();
