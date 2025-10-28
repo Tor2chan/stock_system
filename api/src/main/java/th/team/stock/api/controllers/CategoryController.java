@@ -52,8 +52,8 @@ public class CategoryController implements ApiConstant{
         }
     }
 
-    @PostMapping("create-category")
-    public ResponseEntity<Map<String, Object>> createCategory(HttpServletRequest request, HttpServletResponse response,
+    @PostMapping("save-category")
+    public ResponseEntity<Map<String, Object>> saveCategory(HttpServletRequest request, HttpServletResponse response,
             @RequestBody CategoryData data) {
         try {
 
