@@ -62,11 +62,11 @@ public class ProductService implements ApiConstant{
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");
         sb.append(orderBy);
-        sb.append(" ) AS row_num, name ,sku, SUM(amount) AS sum_amount, category ");
-        sb.append(" from product p ");
+        sb.append(" ) AS row_num, p.name ,p.sku, SUM(p.amount) AS sum_amount, p.code, c.name AS category_name ");
+        sb.append(" from product p JOIN category c ON c.code = p.code ");
         sb.append(WHERE);
         sb.append(conditions.toString());
-        sb.append("group by sku, name, category");
+        sb.append("group by p.sku, p.name, p.code, c.name");
         sb.append(LIMIT);
 
         List<ProductData> entries = jdbcTemplate.query(sb.toString(),
@@ -95,13 +95,13 @@ public class ProductService implements ApiConstant{
 
 
           if (null != criteria.getSku() && null != criteria.getSku()) { 
-               conditions.append(" and sku = ? ");
+               conditions.append(" and p.sku = ? ");
                 params.add(criteria.getSku());
             }
 
 
           if (null != criteria.getId() && null != criteria.getId()) { 
-               conditions.append(" and id = ? ");
+               conditions.append(" and p.id = ? ");
                 params.add(criteria.getId());
             }
 
@@ -110,8 +110,8 @@ public class ProductService implements ApiConstant{
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");
         sb.append(orderBy);
-        sb.append(" ) AS row_num, p.* ");
-        sb.append(" from product p ");
+        sb.append(" ) AS row_num, p.*, c.name AS category_name ");
+        sb.append(" from product p  JOIN category c ON c.code = p.code");
         sb.append(WHERE);
         sb.append(conditions.toString());
         sb.append(orderBy);

@@ -77,7 +77,7 @@ public class CategoryController implements ApiConstant{
     public ResponseEntity<Map<String, Object>> deleteCategory(HttpServletRequest request,
         HttpServletResponse response,
         @PathVariable(name = "id", required = true) Long id) {
-                
+                  
         try {
 
             categoryRepo.deleteById(id);
