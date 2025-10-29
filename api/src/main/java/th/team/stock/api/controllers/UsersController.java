@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import th.team.stock.commons.ApiConstant;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import th.team.stock.commons.ApiConstant.LogType;
 import th.team.stock.commons.CommonUtils;
+import th.team.stock.services.EntityMapperService;
+import th.team.stock.dto.CategoryData;
 import th.team.stock.dto.UsersData;
+import th.team.stock.models.Category;
 import th.team.stock.models.Users;
 import th.team.stock.repositories.UsersRepo;
 import th.team.stock.services.UsersService;
@@ -31,9 +35,9 @@ import java.util.Map;
 
 public class UsersController implements ApiConstant{
     
-
-     private final UsersService usersService;
-    
+    private final UsersService usersService;
+    private final EntityMapperService mapperService;
+    private final UsersRepo usersRepo;
     
     @PostMapping("find")
     public ResponseEntity<Map<String, Object>> findusers(HttpServletRequest request, HttpServletResponse response,
@@ -51,4 +55,30 @@ public class UsersController implements ApiConstant{
             return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
         }
     }
+
+    @PostMapping("save-user")
+    public ResponseEntity<Map<String, Object>> saveUser(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody UsersData data) {
+        try {
+
+            Users users = mapperService.convertToEntity(data, Users.class);
+            users.setName(data.getName());
+            users.setUsername(data.getUsername());
+            users.setRole(data.getRole());
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            users.setPassword(encoder.encode(data.getPassword())); 
+
+            usersRepo.save(users);
+            UsersData result = mapperService.convertToEntity(users, UsersData.class);
+
+            return new ResponseEntity<>(CommonUtils.response(result, "SUCCESS", null), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(CommonUtils.responseError("Invalid input data for creating category"), HttpStatus.OK);
+        }
+    }      
+    
+    
 }
