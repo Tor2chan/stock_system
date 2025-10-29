@@ -45,11 +45,22 @@ public class ProductService implements ApiConstant{
         String orderBy = " order by p.sku desc ";
 
 
-          if (null != criteria.getSku() && null != criteria.getSku()) { 
-               conditions.append(" and sku = ? ");
-                params.add(criteria.getSku());
+     
+
+            if (criteria.getSku() != null && !criteria.getSku().isEmpty()) { 
+            conditions.append(" and sku = ? ");
+            params.add(criteria.getSku());
             }
 
+            if (criteria.getName() != null && !criteria.getName().isEmpty()) { 
+            conditions.append(" and name = ? ");
+            params.add(criteria.getName());
+            }
+
+        if (criteria.getCode() != null && !criteria.getCode().isEmpty()) { 
+            conditions.append(" and code = ? ");
+            params.add(criteria.getCode());
+            }
 
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");

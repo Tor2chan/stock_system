@@ -27,6 +27,6 @@ public class Product {
     private Date receivedDate;
     private Date expireDate;
     private Date createDate;
-
+private String code;
 
 }

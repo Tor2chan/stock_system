@@ -70,6 +70,7 @@ public class ProductController implements ApiConstant{
             return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
         }
     }
+
  
     @PostMapping("save-product")
     public ResponseEntity<Map<String, Object>> saveProduct(HttpServletRequest request, HttpServletResponse response,
@@ -85,6 +86,7 @@ public class ProductController implements ApiConstant{
             product.setReceivedDate(data.getReceivedDate());
             product.setExpireDate(data.getExpireDate());
             product.setCategory(data.getCategory());
+            product.setCode(data.getCode());
 
             productRepo.save(product);
             ProductData result = mapperService.convertToEntity(product, ProductData.class);

@@ -71,8 +71,8 @@ public class CategoryController implements ApiConstant{
             log.error(e.getMessage(), e);
             return new ResponseEntity<>(CommonUtils.responseError("Invalid input data for creating category"), HttpStatus.OK);
         }
-    }
-
+    }      
+                     
     @DeleteMapping("/delete-category/{id}")
     public ResponseEntity<Map<String, Object>> deleteCategory(HttpServletRequest request,
         HttpServletResponse response,

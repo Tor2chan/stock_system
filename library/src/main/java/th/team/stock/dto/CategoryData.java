@@ -11,11 +11,11 @@ import lombok.AllArgsConstructor;
 
 public class CategoryData extends PageableCommon{
 
-   
-    private Long id; 
+    private Long id;
+ 
 
     private String code;
     private String name;
     private Boolean active;
-    
+    private String categoryName;
 }

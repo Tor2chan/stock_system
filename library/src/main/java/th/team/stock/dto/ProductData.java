@@ -27,5 +27,8 @@ public class ProductData extends PageableCommon{
     private Date expireDate;
     private Date createDate;
     private Integer sumAmount;
+     private String categoryName;
+   private String code;
+    
     
 }
