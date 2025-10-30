@@ -20,13 +20,13 @@ public class ProductData extends PageableCommon{
    private String sku;
 
    private String batchCode;
-   private Integer amount;
+   private Long amount;
    private String category;
    private Double price;
    private Date receivedDate;
    private Date expireDate;
    private Date createDate;
-   private Integer sumAmount;
+   private Long sumAmount;
    private String categoryName;
    private String code;
 

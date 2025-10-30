@@ -129,7 +129,7 @@ public class ProductController implements ApiConstant{
                 return new ResponseEntity<>(CommonUtils.responseError("Product not found"), HttpStatus.NOT_FOUND);
             }
 
-            Integer newAmount = product.getAmount() - data.getWithdraw();
+            Long newAmount = product.getAmount() - data.getWithdraw();
 
             if (newAmount < 0) {
                 return new ResponseEntity<>(CommonUtils.responseError("Amount cannot be negative"), HttpStatus.BAD_REQUEST);
