@@ -44,7 +44,7 @@ public class UsersService implements ApiConstant{
 
 
           if (null != criteria.getId() && null != criteria.getId()) { 
-               conditions.append(" and name = ? ");
+               conditions.append(" and u.name = ? ");
                 params.add(criteria.getId());
               
             }
