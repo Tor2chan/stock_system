@@ -23,7 +23,7 @@ public class Product {
     private String batchCode;
     private Integer amount;
     private String category;
-    private Integer price;
+    private Double price;
     private Date receivedDate;
     private Date expireDate;
     private Date createDate;
