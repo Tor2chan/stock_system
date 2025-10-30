@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.web.bind.annotation.*;
-
 import th.team.stock.commons.ApiConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -114,7 +113,45 @@ public class ProductController implements ApiConstant{
             return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
         }
     }
-    
+
+    @PutMapping("withdraw-product/{id}")
+    public ResponseEntity<Map<String, Object>> updateSubstatusConsentExportNcb(
+        HttpServletRequest request, 
+        HttpServletResponse response,
+        @PathVariable(name = "id", required = true) Long id,
+        @RequestBody ProductData data) {
+
+        try {
+            Map<String, Object> addOn = new HashMap<>();
+            Product product = productRepo.findById(id).orElse(null);
+
+            if (product == null) {
+                return new ResponseEntity<>(CommonUtils.responseError("Product not found"), HttpStatus.NOT_FOUND);
+            }
+
+            Integer newAmount = product.getAmount() - data.getWithdraw();
+
+            if (newAmount < 0) {
+                return new ResponseEntity<>(CommonUtils.responseError("Amount cannot be negative"), HttpStatus.BAD_REQUEST);
+            }
+
+            if (newAmount == 0) {
+                productRepo.deleteById(id);
+                return new ResponseEntity<>(CommonUtils.response(null, SUCCESS, addOn), HttpStatus.OK);
+            }
+
+            product.setAmount(newAmount);
+            productRepo.save(product);
+
+            ProductData result = mapperService.convertToEntity(product, ProductData.class);
+            return new ResponseEntity<>(CommonUtils.response(result, SUCCESS, null), HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
  
 }
     

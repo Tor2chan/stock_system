@@ -27,6 +27,10 @@ public class Product {
     private Date receivedDate;
     private Date expireDate;
     private Date createDate;
-private String code;
+    private String code;
 
+    //as column
+    @Transient
+    @Column(name = "new_amount")
+    private Integer newAmount;
 }

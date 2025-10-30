@@ -14,21 +14,24 @@ import lombok.AllArgsConstructor;
 
 public class ProductData extends PageableCommon{
 
-       private Long id;
+   private Long id;
     
-    private String name;
-    private String sku;
+   private String name;
+   private String sku;
 
-    private String batchCode;
-    private Integer amount;
-    private String category;
-    private Integer price;
-    private Date receivedDate;
-    private Date expireDate;
-    private Date createDate;
-    private Integer sumAmount;
+   private String batchCode;
+   private Integer amount;
+   private String category;
+   private Integer price;
+   private Date receivedDate;
+   private Date expireDate;
+   private Date createDate;
+   private Integer sumAmount;
    private String categoryName;
    private String code;
-    
+
+   //จำนวนที่จะเบิกของ
+   private Integer withdraw;
+   private Integer newAmount;    
     
 }

@@ -105,8 +105,6 @@ public class ProductService implements ApiConstant{
                 params.add(criteria.getId());
             }
 
-        
-
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");
         sb.append(orderBy);
@@ -133,5 +131,45 @@ public class ProductService implements ApiConstant{
         return result;
     }
 
+        public Map<String, Object> withdrawProduct(ProductData criteria) {
+		
+		Map<String, Object> result = new HashMap<>();
+        StringBuilder conditions = new StringBuilder();
+        List<Object> params = new ArrayList<>();
+
+        String orderBy = " order by p.id desc ";
+
+
+          if (null != criteria.getSku() && null != criteria.getSku()) { 
+               conditions.append(" and p.sku = ? ");
+                params.add(criteria.getSku());
+            }
+
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select row_number() OVER ( ");
+        sb.append(orderBy);
+        sb.append(" ) AS row_num, p.*, c.name AS category_name ");
+        sb.append(" from product p  JOIN category c ON c.code = p.code");
+        sb.append(WHERE);
+        sb.append(conditions.toString());
+        sb.append(orderBy);
+        sb.append(LIMIT);
+
+        List<ProductData> entries = jdbcTemplate.query(sb.toString(),
+                BeanPropertyRowMapper.newInstance(ProductData.class),
+                CommonUtils.joinParam(params.toArray(), criteria.getPageable()));
+
+        StringBuilder count = new StringBuilder();
+        count.append("select count(*) from product p ");
+        count.append(WHERE);
+        count.append(conditions.toString());
+        Long totalRecords = jdbcTemplate.queryForObject(count.toString(), Long.class, params.toArray());
+
+        result.put(ENTRIES, entries);
+        result.put(TOTAL_RECORDS, totalRecords);
+
+        return result;
+    }
 
 }
