@@ -78,7 +78,24 @@ public class UsersController implements ApiConstant{
             log.error(e.getMessage(), e);
             return new ResponseEntity<>(CommonUtils.responseError("Invalid input data for creating category"), HttpStatus.OK);
         }
-    }      
+
+    }   
     
+       @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<Map<String, Object>> deleteUsers(HttpServletRequest request,
+        HttpServletResponse response,
+        @PathVariable(name = "id", required = true) Long id) {
+                
+        try {
+
+            usersRepo.deleteById(id);
+
+            return new ResponseEntity<>(CommonUtils.response(null, MSG_DELETE_SUCCESS, null), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
+        }
+    }
     
 }
