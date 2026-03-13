@@ -80,6 +80,24 @@ public class UsersController implements ApiConstant{
         }
 
     }   
+@PutMapping("toggle-status/{id}")
+public ResponseEntity<Map<String, Object>> toggleStatus(
+        HttpServletRequest request, HttpServletResponse response,
+        @PathVariable Long id) {
+    try {
+        Users user = usersRepo.findById(id).orElse(null);
+        if (user == null) {
+            return new ResponseEntity<>(CommonUtils.responseError("User not found"), HttpStatus.NOT_FOUND);
+        }
+        user.setActive(!user.getActive());
+        usersRepo.save(user);
+        return new ResponseEntity<>(CommonUtils.response(null, SUCCESS, null), HttpStatus.OK);
+    } catch (Exception e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(CommonUtils.responseError(e.getMessage()), HttpStatus.OK);
+    }
+}
+
     
        @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<Map<String, Object>> deleteUsers(HttpServletRequest request,

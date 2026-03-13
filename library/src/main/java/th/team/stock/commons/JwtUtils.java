@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtUtils {
 
     private final String SECRET = "super_secret_key_that_must_be_at_least_256_bits_long_for_hs256";
-    private final long ACCESS_EXP = 1000L * 60 * 60; //1hours
+    private final long ACCESS_EXP = 1000L * 60 ; //1hours
     private final long REFRESH_EXP = 1000L * 60 * 60 * 24 * 7; // 7 days
 
     private SecretKey getSigningKey() {

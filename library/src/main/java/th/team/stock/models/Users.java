@@ -21,4 +21,5 @@ public class Users {
     private String name;
     private String password;
     private String role;
+    private Boolean active = true;
 }

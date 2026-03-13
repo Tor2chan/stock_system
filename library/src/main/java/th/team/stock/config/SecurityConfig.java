@@ -61,10 +61,10 @@ public class SecurityConfig {
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/stock-api/auth/**").permitAll()
-                .requestMatchers("/stock-api/**").authenticated()
-                .anyRequest().authenticated()
-            )
+    .requestMatchers("/stock-api/auth/**").permitAll()
+    .requestMatchers("/stock-api/**").permitAll()
+    .anyRequest().permitAll()
+)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

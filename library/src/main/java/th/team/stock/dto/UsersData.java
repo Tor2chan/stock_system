@@ -16,4 +16,5 @@ public class UsersData extends PageableCommon{
     private String name;
     private String password;
     private String role;
+    private Boolean active;
 }
