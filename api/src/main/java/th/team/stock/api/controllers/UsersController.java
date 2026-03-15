@@ -65,6 +65,9 @@ public class UsersController implements ApiConstant{
             users.setName(data.getName());
             users.setUsername(data.getUsername());
             users.setRole(data.getRole());
+            users.setActive(true);
+
+
 
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             users.setPassword(encoder.encode(data.getPassword())); 
@@ -76,7 +79,7 @@ public class UsersController implements ApiConstant{
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return new ResponseEntity<>(CommonUtils.responseError("Invalid input data for creating category"), HttpStatus.OK);
+            return new ResponseEntity<>(CommonUtils.responseError("Error occurred while saving user"), HttpStatus.OK);
         }
 
     }   
