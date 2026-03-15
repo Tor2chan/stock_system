@@ -48,11 +48,9 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(request -> {
                 var corsConfig = new org.springframework.web.cors.CorsConfiguration();
-                corsConfig.setAllowedOrigins(List.of("*"));
-                corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                corsConfig.setAllowedHeaders(List.of(
-                    "Authorization", "Content-Type", "Accept", "Origin"
-                ));
+                corsConfig.setAllowedOrigins(List.of("https://stock-system-ui.onrender.com", "http://localhost:4200"));
+                corsConfig.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+                corsConfig.setAllowedHeaders(List.of("*"));
                 corsConfig.setExposedHeaders(List.of("Authorization"));
                 corsConfig.setAllowCredentials(true);
                 return corsConfig;
