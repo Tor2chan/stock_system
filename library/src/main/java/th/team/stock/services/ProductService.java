@@ -35,7 +35,6 @@ public class ProductService implements ApiConstant {
 
         String orderBy = " order by p.sku desc ";
 
-        // ⭐ ค้นหาจาก name field เดียว แต่ OR ทั้ง name และ sku
         if (criteria.getName() != null && !criteria.getName().isEmpty()) {
             conditions.append(" and ( LOWER(p.name) LIKE LOWER(?) OR LOWER(p.sku) LIKE LOWER(?) ) ");
             String likeParam = CommonUtils.concatLikeParam(criteria.getName(), true, true);
@@ -54,7 +53,9 @@ public class ProductService implements ApiConstant {
         StringBuilder sb = new StringBuilder();
         sb.append("select row_number() OVER ( ");
         sb.append(orderBy);
-        sb.append(" ) AS row_num, p.name, p.sku, SUM(p.amount) AS sum_amount, p.code, c.name AS category_name ");
+        sb.append(" ) AS row_num, p.name, p.sku, SUM(p.amount) AS sum_amount, p.code, c.name AS category_name, ");
+        // ⭐ เพิ่ม expire_date ที่ใกล้หมดอายุที่สุดของแต่ละ SKU
+        sb.append(" MIN(p.expire_date) AS expire_date ");
         sb.append(" from product p JOIN category c ON c.code = p.code ");
         sb.append(WHERE);
         sb.append(conditions.toString());
